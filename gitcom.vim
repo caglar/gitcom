@@ -22,14 +22,13 @@ endif
 
 
 " ------------------------------------------------------------------------------
-" s:AppFunction: this function is available vi the <Plug>/<script> interface above
+" s:GitCommit: this function is available vi the <Plug>/<script> interface above
 function! s:GitCommit()
     execute "w!"
-"    let out = system("ls -alh")
- "   echo out
-    let cmd = "git commit"
-    let output = system(cmd)
-    echo output
+    let cmd = "git commit -a"
+    "let output = system(cmd)
+    !git commit -a
+    "    echo output
 endfunction
 
 "save and commit
