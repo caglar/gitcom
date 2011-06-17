@@ -24,11 +24,9 @@ endif
 " ------------------------------------------------------------------------------
 " s:GitCommit: this function is available vi the <Plug>/<script> interface above
 function! s:GitCommit()
+    let commitFile = 'COMMIT_EDITMSG'
     execute "w!"
-    let cmd = "git commit -a"
-    "let output = system(cmd)
     !git commit -a
-    "    echo output
 endfunction
 
 "save and commit
