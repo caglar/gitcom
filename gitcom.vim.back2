@@ -23,15 +23,15 @@ endif
 
 " ------------------------------------------------------------------------------
 " s:GitCommit: this function is available vi the <Plug>/<script> interface above
-" add changes to the git repo
-function! s:GitAddAll()
+function! s:GitCommit()
+    let commitFile = 'COMMIT_EDITMSG'
     execute "w!"
     !git add -A
-endfunction
-
-"commit changes to the git repo
-function! s:GitCommit()
-    execute "w!"
+    "call system("git commit -a")
+    let fname = "./.git/COMMIT_EDITMSG"
+    let tmpFname = "./.git/COMMIT_EDITMSG_TMP"
+    "let alist = []
+    "!touch "./.git/COMMIT_EDITMSG_TMP"
     python << EOF
 import os
 import subprocess
@@ -43,17 +43,31 @@ cmdDiff = "git diff --patience"
 stdout_handle = os.popen(cmdDiff, "r")
 diffMsg = stdout_handle.read()
 
+print diffMsg
+
 FILE = open(tmpFname, 'w')
 FILE.write(diffMsg)
 FILE.close()
+
+pipe = subprocess.Popen(cmdCommit, shell=True)
+pipe.wait()
 EOF
-    !git commit -a -t "./.git/COMMIT_EDITMSG_TMP"
+"    call system("rm -f " + tmpFname)
+    "  for line in readfile(fname, '', 25)
+    "    echomsg line
+    "     if line =~ 'modified' |
+    "let lin = system("git diff --patience")
+    "        echo line
+    "call add(alist, lin)
+    "    | endif
+    "endfor
+    "  echomsg alist[0]
+    "  call writefile(alist, fname, '')
+    "  !git commit -a -t "./.git/COMMIT_EDITMSGb"
 endfunction
 
 "save and commit
 :command W call s:GitCommit()
-:command A call s:GitAddAll()
-
 "autocmd! BufWritePost * call s:GitCommit()
 " ------------------------------------------------------------------------------
 let &cpo= s:keepcpo
