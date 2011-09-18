@@ -1,0 +1,2 @@
+python and git should be installed on your PC.
+copy gitcom.vim to the .vim/plugin directory on your home directory.
